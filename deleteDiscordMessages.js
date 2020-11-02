@@ -6,7 +6,7 @@
     popup = window.open('', '', `top=0,left=${screen.width-800},width=850,height=${screen.height}`);
     if(!popup || !popup.document || !popup.document.write) return console.error('Popup blocked! Please allow popups and try again.');
     popup.document.write(/*html*/`<!DOCTYPE html>
-    <html><head><meta charset='utf-8'><title>Delete Discord Messages</title><base target="_blank">
+    <html><head><meta charset='utf-8'><title>Discord Mesaj Silici #froxy</title><base target="_blank">
     <style>body{background-color:#36393f;color:#dcddde;font-family:sans-serif;font-size: 9pt;} a{color:#00b0f4;}
     body.redact .priv{display:none;} body:not(.redact) .mask{display:none;} body.redact [priv]{-webkit-text-security:disc;}
     .toolbar span{margin-right:8px;}
@@ -16,12 +16,12 @@
     </style></head><body>
     <div class="toolbar" style="position:fixed;top:0;left:0;right:0;padding:8px;background:#36393f;box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 1.5px 0 rgba(0,0,0,.05), 0 2px 0 rgba(0,0,0,.05);">
         <div style="display:flex;flex-wrap:wrap;">
-            <span>Token? <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/authToken.md" title="Help">?</a> <button id="getToken">auto</button><br>
+            <span>Token? <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/authToken.md" title="Help">?</a> <button id="getToken">Tıkla</button><br>
                 <input type="password" id="authToken" placeholder="Token" autofocus>*<br>
-                <span>ID <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/authorId.md" title="Help">?</a> <button id="getAuthor">auto</button></span>
+                <span>ID <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/authorId.md" title="Help">?</a> <button id="getAuthor">Tıkla</button></span>
                 <br><input id="authorId" type="text" placeholder="DM ID" priv></span>
             <span>DM/Kanal <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/channelId.md" title="Help">?</a>
-                <button id="getGuildAndChannel">auto</button><br>
+                <button id="getGuildAndChannel">Tıkla</button><br>
                 <input id="guildId" type="text" placeholder="Sunucu ID" priv><br>
                 <input id="channelId" type="text" placeholder="Kanal ID" priv><br>
                 <label><input id="includeNsfw" type="checkbox">NSFW Kanalı</label><br><br>
@@ -34,7 +34,7 @@
                 <input id="maxId" type="text" placeholder="Mesajdan önceki ID" priv><br>
             </span>
             <span>Mesaj Arat <a href="https://github.com/devfroxy/deleteDiscordMessages/blob/master/help/filters.md" title="Help">?</a><br>
-                <input id="content" type="text" placeholder="Containing text" priv><br>
+                <input id="content" type="text" placeholder="Arattıgın mesaj" priv><br>
                 <label><input id="hasLink" type="checkbox">Sadece link içerenler</label><br>
                 <label><input id="hasFile" type="checkbox">Sadece dosya içerenler</label><br>
                 <label><input id="includePinned" type="checkbox">Sabitlenenleri dahil et</label>
@@ -45,13 +45,13 @@
         <button id="stop" style="background:#f04747;width:80px;" disabled>Durdur</button>
         <button id="clear" style="width:80px;">Temizle</button>
         <label><input id="autoScroll" type="checkbox" checked>Otomatik scroll</label>
-        <label title="Hide sensitive information for taking screenshots"><input id="redact" type="checkbox">Screenshot mode</label>
+        <label title="Hide sensitive information for taking screenshots"><input id="redact" type="checkbox">Screenshot modu</label>
         <progress id="progress" style="display:none;"></progress>
 
     </div>
     <pre style="margin-top:200px;font-size:0.75rem;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;">
-        <center>Star this project on <a href="https://github.com/devfroxy/deleteDiscordMessages" target="_blank">github.com/devfroxy/deleteDiscordMessages</a>!\n\n
-            <a href="https://github.com/devfroxy/deleteDiscordMessages/issues" target="_blank">Issues or help</a></center>
+        <center>Projeyi Başlatmak için <a href="https://github.com/devfroxy/deleteDiscordMessages" target="_blank">github.com/devfroxy/deleteDiscordMessages</a>!\n\n
+            <a href="https://github.com/devfroxy/deleteDiscordMessages/issues" target="_blank">Yardım için</a></center>
         </pre></body></html>`);
 
     const $ = s => popup.document.querySelector(s);
@@ -268,7 +268,7 @@
 
                 if (++iterations < 1) {
                     log.verb(`Waiting for your confirmation...`);
-                    if (!await ask(`Do you want to delete ~${total} messages?\nEstimated time: ${etr}\n\n---- Preview ----\n` +
+                    if (!await ask(`Do you want to Silinen ~${total} Mesaj\nEstimated time: ${etr}\n\n---- Preview ----\n` +
                         messagesToDelete.map(m => `${m.author.username}#${m.author.discriminator}: ${m.attachments.length ? '[ATTACHMENTS]' : m.content}`).join('\n')))
                             return end(log.error('Aborted by you!'));
                     log.verb(`OK`);
@@ -279,7 +279,7 @@
                     if (stopHndl && stopHndl()===false) return end(log.error('Stopped by you!'));
 
                     log.debug(`${((delCount + 1) / grandTotal * 100).toFixed(2)}% (${delCount + 1}/${grandTotal})`,
-                        `Deleting ID:${redact(message.id)} <b>${redact(message.author.username+'#'+message.author.discriminator)} <small>(${redact(new Date(message.timestamp).toLocaleString())})</small>:</b> <i>${redact(message.content).replace(/\n/g,'↵')}</i>`,
+                        `Silinen ID:${redact(message.id)} <b>${redact(message.author.username+'#'+message.author.discriminator)} <small>(${redact(new Date(message.timestamp).toLocaleString())})</small>:</b> <i>${redact(message.content).replace(/\n/g,'↵')}</i>`,
                         message.attachments.length ? redact(JSON.stringify(message.attachments)) : '');
                     if (onProgress) onProgress(delCount + 1, grandTotal);
                     
@@ -340,7 +340,7 @@
             }
         }
 
-        log.success(`\nStarted at ${start.toLocaleString()}`);
+        log.success(`\nBaşlatıldı ${start.toLocaleString()}`);
         log.debug(`authorId="${redact(authorId)}" guildId="${redact(guildId)}" channelId="${redact(channelId)}" minId="${redact(minId)}" maxId="${redact(maxId)}" hasLink=${!!hasLink} hasFile=${!!hasFile}`);
         if (onProgress) onProgress(null, 1);
         return await recurse();
